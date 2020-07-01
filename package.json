@@ -1,0 +1,25 @@
+{
+  "name": "okta-demo-api-docs",
+  "version": "0.0.1",
+  "description": "Front End to the okta-demo-api",
+  "main": "index.js",
+  "authors": {
+    "name": "zeekhoo",
+    "email": "zee.khoo@okta.com"
+  },
+  "repository": "/okta-demo-api-docs",
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.3.1",
+    "@vuepress/plugin-back-to-top": "^1.3.1",
+    "@vuepress/plugin-medium-zoom": "^1.3.1"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "file-saver": "^2.0.2"
+  }
+}
