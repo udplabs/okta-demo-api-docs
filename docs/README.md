@@ -1,20 +1,14 @@
 ---
 home: true
-tagline: README
-# actionText: Swagger
-# actionLink: /swagger/
-# features:
-# - title: Feature 1 Title
-#   details: Feature 1 Description
-# - title: Feature 2 Title
-#   details: Feature 2 Description
-# - title: Feature 3 Title
-#   details: Feature 3 Description
+actionText: Swagger Docs
+actionLink: /swagger/
+tagline: The Okta Demo API Platform Service
 footer: TBD
 ---
 
 ## About
-The Okta Demo Api is a platform service that answers three basic requirements:
+
+The Okta Demo API is a platform service that answers three basic requirements:
 
 * Provide a useable and dependable RESTful API to use in Okta demos, presentations or other [pre-sales] activities
 * Create a solid reference platform for integrating OAuth flows into an API including configuration of an authorization server, scopes/claims inside Okta

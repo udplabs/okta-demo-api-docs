@@ -1,4 +1,6 @@
 const { description } = require('../../package')
+require('dotenv').config()
+const webpack = require('webpack')
 
 module.exports = {
   /**
@@ -54,5 +56,17 @@ module.exports = {
   plugins: [
     '@vuepress/plugin-back-to-top',
     '@vuepress/plugin-medium-zoom',
-  ]
+  ],
+
+
+  /**
+   * dotenv is not available inside Vuepress so was added as dependency
+   * The following takes everything from .env file and makes it available to all components
+   * Solution taken from: https://stackoverflow.com/questions/53669076/how-do-i-use-configurewebpack-to-make-custom-variables-available-to-components
+   */
+  configureWebpack: (config) => {
+    return { plugins: [
+      new webpack.EnvironmentPlugin({ ...process.env })
+    ]}
+  }  
 }

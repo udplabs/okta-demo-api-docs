@@ -8,7 +8,7 @@
 	color: #ffffff;
 	font-family: Arial;
 	font-size: 17px;
-	padding: 16px 31px;
+    padding: 3px 22px;
 	text-decoration: none;
 	text-shadow: 0px 1px 0px #f0700e;
 }
@@ -42,19 +42,29 @@
     color: #71767c
 }
 
+.label {
+    display: inline-block;
+    width: 340px;
+}
+
 </style>
 <template>
     <div>
-        Click to download the Postman Collection: &nbsp;&nbsp;
-        <div class="inline" v-if="loading">
-            <button class="loader" disabled></button>
-            &nbsp;Downloading...
+        <div v-for="button in buttons">
+            <div class="label">
+                Click to download the Postman {{button.label}}:
+            </div>
+            <div class="inline" v-if="button.loading">
+                <button class="loader" disabled></button>
+                &nbsp;Downloading...
+            </div>
+            <button 
+                v-else
+                class="button" 
+                @click="download(button)"
+            >Download {{button.label}}</button>
+            <hr v-if="button.label=='Collection'"/>
         </div>
-        <button 
-            v-else
-            class="button" 
-            @click="download"
-        >Download Collection</button>
     </div>
 </template>
 
@@ -65,20 +75,34 @@ export default {
     name: 'postman',
     data() {
         return {
-            loading: false
+            loading: false,
+            buttons: [
+                {
+                    label: 'Collection',
+                    location: '/test/api/admin/System/download-postman-collection',
+                    filename: 'okta-demo-api.postman_collection.json',
+                    loading: false
+                },
+                {
+                    label: 'Environment',
+                    location: '/test/api/admin/System/download-postman-environment',
+                    filename: 'okta-demo-api.postman_environment.json',
+                    loading: false
+                }
+            ]
         }
     },
     methods: {
-        async download() {
-            this.loading = true;
+        async download(button) {
+            button.loading = true;
             const res = await axios.post(
-                'https://services.unidemo.info/test/api/admin/System/download-postman-collection'
+                process.env.VUE_APP_API_URL + button.location
             );
             if (res.status === 200) {
-                const file = new File([JSON.stringify(res.data, null, '\t')], "okta-demo-api.postman_collection.json", {type: "application/json"});
+                const file = new File([JSON.stringify(res.data, null, '\t')], button.filename, {type: "application/json"});
                 FileSaver.saveAs(file);
             }
-            this.loading = false;
+            button.loading = false;
         }
     }
 }

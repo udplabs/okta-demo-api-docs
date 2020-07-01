@@ -12,7 +12,7 @@ export default {
     name: 'swagger',
     data() {
         return {
-            url: 'https://services.unidemo.info/swagger/index.html'
+            url: process.env.VUE_APP_API_URL + '/swagger/index.html'
         }
     },
     mounted: function() {
