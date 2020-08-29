@@ -3,13 +3,7 @@ require('dotenv').config()
 const webpack = require('webpack')
 
 module.exports = {
-  /**
-   * Ref：https://v1.vuepress.vuejs.org/config/#title
-   */
   title: 'okta-demo-api',
-  /**
-   * Ref：https://v1.vuepress.vuejs.org/config/#description
-   */
   description: description,
 
   /**
@@ -23,11 +17,6 @@ module.exports = {
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
   ],
 
-  /**
-   * Theme configuration, here is the default theme configuration for VuePress.
-   *
-   * ref：https://v1.vuepress.vuejs.org/theme/default-theme-config.html
-   */
   themeConfig: {
     repo: '',
     editLinks: false,
@@ -35,26 +24,36 @@ module.exports = {
     lastUpdated: 'Last Updated',
     nav: [
       {
-        text: 'API',
-        link: '/swagger/',
+        text: 'Guide',
+        link: '/guide/',
+      },
+      {
+        text: 'System Reset',
+        link: '/guide/reset',
       },
       {
         text: 'Postman',
-        link: '/postman/'
+        link: '/guide/setup-postman',
+      },
+      {
+        text: 'Swagger',
+        link: process.env.VUE_APP_API_URL + '/swagger/index.html',
       },
       {
         text: 'Github',
         link: 'https://github.com/udplabs/okta-demo-api'
       }
-
-    ]
+    ],
+    sidebar: {
+      '/guide/': getGuideSidebar()
+    }
   },
 
   /**
-   * Apply plugins，ref：https://v1.vuepress.vuejs.org/zh/plugin/
+   * Apply plugins，ref：https://v1.vuepress.vuejs.org/plugin/
    */
   plugins: [
-    '@vuepress/plugin-back-to-top',
+    // '@vuepress/plugin-back-to-top',
     '@vuepress/plugin-medium-zoom',
   ],
 
@@ -69,4 +68,14 @@ module.exports = {
       new webpack.EnvironmentPlugin({ ...process.env })
     ]}
   }  
+}
+
+function getGuideSidebar() {
+  return [
+    {
+      title: "Guide",
+      collapsable: false,
+      children: ["", "reset", "setup-postman"],
+    },
+  ];
 }

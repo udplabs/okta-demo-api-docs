@@ -19,7 +19,6 @@
 	position:relative;
 	top:1px;
 }
-
 .loader {
     display: inline-block;
     border: 6px solid #f3f3f3;
@@ -29,27 +28,25 @@
     height: 30px;
     animation: spin 1.5s linear infinite;
 }
-
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
 .inline {
     display: inline-block;
 	font-family: Arial;
 	font-size: 12px;
     color: #71767c
 }
-
 .label {
     display: inline-block;
     width: 340px;
 }
-
 </style>
+
 <template>
     <div>
+        <br/>
         <div v-for="button in buttons">
             <div class="label">
                 Click to download the Postman {{button.label}}:
@@ -79,13 +76,13 @@ export default {
             buttons: [
                 {
                     label: 'Collection',
-                    location: '/test/api/admin/System/download-postman-collection',
+                    api: '/api/admin/System/download-postman-collection',
                     filename: 'okta-demo-api.postman_collection.json',
                     loading: false
                 },
                 {
                     label: 'Environment',
-                    location: '/test/api/admin/System/download-postman-environment',
+                    api: '/api/admin/System/download-postman-environment',
                     filename: 'okta-demo-api.postman_environment.json',
                     loading: false
                 }
@@ -94,9 +91,13 @@ export default {
     },
     methods: {
         async download(button) {
+            const host = window.location.host;
+            let subdomain = host.split('.')[0];
+            if (subdomain.startsWith('localhost')) subdomain = 'test';
+
             button.loading = true;
             const res = await axios.post(
-                process.env.VUE_APP_API_URL + button.location
+                process.env.VUE_APP_API_URL + '/' + subdomain + button.api
             );
             if (res.status === 200) {
                 const file = new File([JSON.stringify(res.data, null, '\t')], button.filename, {type: "application/json"});

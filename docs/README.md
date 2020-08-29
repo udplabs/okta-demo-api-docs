@@ -1,9 +1,8 @@
 ---
 home: true
-actionText: Swagger Docs
-actionLink: /swagger/
+actionText: Get Started
+actionLink: /guide/
 tagline: The Okta Demo API Platform Service
-footer: TBD
 ---
 
 ## About
