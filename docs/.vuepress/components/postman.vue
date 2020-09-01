@@ -72,6 +72,7 @@ export default {
     name: 'postman',
     data() {
         return {
+            subdomain: undefined,
             loading: false,
             buttons: [
                 {
@@ -89,17 +90,21 @@ export default {
             ]
         }
     },
+    async mounted() {
+        const subdomain = window.location.host.split('.')[0];
+        this.subdomain = subdomain.startsWith('localhost') ? process.env.VUE_APP_TEST_SUBDOMAIN : subdomain;
+    },
     methods: {
         async download(button) {
-            const host = window.location.host;
-            let subdomain = host.split('.')[0];
-            if (subdomain.startsWith('localhost')) subdomain = 'test';
-
             button.loading = true;
             const res = await axios.post(
-                process.env.VUE_APP_API_URL + '/' + subdomain + button.api
+                process.env.VUE_APP_API_URL + '/' + this.subdomain + button.api
             );
             if (res.status === 200) {
+                if (this.subdomain) {
+                    const val = res.data.values.find(val => { return val.key == 'TenantId' });
+                    if (val) val.value = this.subdomain;
+                }
                 const file = new File([JSON.stringify(res.data, null, '\t')], button.filename, {type: "application/json"});
                 FileSaver.saveAs(file);
             }

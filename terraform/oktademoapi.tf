@@ -1,4 +1,4 @@
-variable "default_login" {}
+variable "default_login" { default = "bob.behnken@gus.local" }
 variable "sleep" { default = 20 }
 variable "org_name" {}
 variable "api_token" {}

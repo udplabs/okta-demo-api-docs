@@ -19,7 +19,7 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            subdomain: 'zeelabs-stg',
+            subdomain: undefined,
             udpConfig: undefined,
             rows: [
                 {
@@ -88,10 +88,8 @@ export default {
     },
     methods: {
         async init() {
-            const host = window.location.host;
-            let subdomain = host.split('.')[0];
-            if (!subdomain.startsWith('localhost'))
-                this.subdomain = subdomain;
+            const subdomain = window.location.host.split('.')[0];
+            this.subdomain = subdomain.startsWith('localhost') ? process.env.VUE_APP_TEST_SUBDOMAIN : subdomain;
 
             const pre = await axios.get(
                 process.env.VUE_APP_UDP_API + '/api/configs/' + this.subdomain + '/services-docs'

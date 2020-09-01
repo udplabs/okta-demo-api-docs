@@ -249,10 +249,8 @@ export default {
             return parts[parts.length - 1];
         },
         async init() {
-            const host = window.location.host;
-            let subdomain = host.split('.')[0];
-            if (!subdomain.startsWith('localhost'))
-                this.subdomain = subdomain;
+            const subdomain = window.location.host.split('.')[0];
+            this.subdomain = subdomain.startsWith('localhost') ? process.env.VUE_APP_TEST_SUBDOMAIN : subdomain;
 
             const pre = await axios.get(
                 process.env.VUE_APP_UDP_API + '/api/configs/' + this.subdomain + '/services-docs'
@@ -301,8 +299,8 @@ export default {
                     headers
                 );
                 data = res.data;
-            } catch(e) {
-                console.log(e);
+            } catch {
+                data = undefined;
             }
             return data;
         },
@@ -332,7 +330,7 @@ export default {
                 );
                 this.status = res.data.message;
             } catch(e) {
-                console.log(e);
+                this.status = 'Unexpected error';
             }
         }
     }

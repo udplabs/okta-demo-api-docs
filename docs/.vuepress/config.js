@@ -41,7 +41,7 @@ module.exports = {
       },
       {
         text: 'Github',
-        link: 'https://github.com/udplabs/okta-demo-api'
+        link: 'https://github.com/udplabs/okta-demo-api-docs'
       }
     ],
     sidebar: {
