@@ -253,7 +253,7 @@ export default {
             this.subdomain = subdomain.startsWith('localhost') ? process.env.VUE_APP_TEST_SUBDOMAIN : subdomain;
 
             const pre = await axios.get(
-                process.env.VUE_APP_UDP_API + '/api/configs/' + this.subdomain + '/services-docs'
+                process.env.VUE_APP_UDP_API + '/api/configs/' + this.subdomain + '/' + process.env.VUE_APP__UDP_APP
             );
             this.udpConfig = pre.data;
 
