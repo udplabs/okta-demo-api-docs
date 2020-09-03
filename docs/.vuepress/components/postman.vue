@@ -75,13 +75,14 @@ export default {
             subdomain: undefined,
             loading: false,
             buttons: [
-                {
+                {   index: 0,
                     label: 'Collection',
                     api: '/api/admin/System/download-postman-collection',
                     filename: 'okta-demo-api.postman_collection.json',
                     loading: false
                 },
                 {
+                    index: 1,
                     label: 'Environment',
                     api: '/api/admin/System/download-postman-environment',
                     filename: 'okta-demo-api.postman_environment.json',
@@ -101,8 +102,17 @@ export default {
                 process.env.VUE_APP_API_URL + '/' + this.subdomain + button.api
             );
             if (res.status === 200) {
-                if (this.subdomain) {
-                    const val = res.data.values.find(val => { return val.key == 'TenantId' });
+                if (this.subdomain && button.index == 1) {
+                    res.data.name = this.subdomain + '-okta-demo-api';
+                    const index = res.data.values.findIndex(val => { return val.key == 'baseUrl'; });
+                    if (index < 0) {
+                        res.data.values.unshift({
+                            key: "baseUrl",
+                            value: process.env.VUE_APP_API_URL,
+                            enabled: true
+                        })
+                    }
+                    const val = res.data.values.find(val => { return val.key == 'TenantId'; });
                     if (val) val.value = this.subdomain;
                 }
                 const file = new File([JSON.stringify(res.data, null, '\t')], button.filename, {type: "application/json"});

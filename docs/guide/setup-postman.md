@@ -74,5 +74,17 @@ You should be returned to the EDIT COLLECTION screen's Authorization tab.
 
 ## Try it out
 * Now, with the access token in place, try out the API calls in the Collection.
-  * For example, remove the access token from the requests. See what happens.
+  * In the left-hand navigation, look for the __Okta Demonstration API__ collection (that you've previously imported). Now go ahead and browse through the collection. Choose the API(s) you want to test.
+  * The environment that you previously imported is named __${udp-subdomain}-okta-api-demo__. Use it by selecting it from the dropdown on the top right-hand corner:
+  ![Postman Environment](./img/environment-choose.png)
+  * Click on the __View__ icon (to the right of it) and notice that we've already populated `base_url` and `TenantId` for you. (__Note:__ Notice that `TenantId` corresponds to the UDP `subdomain`)
+  ![View Postman Environment](./img/environment-view.png)
+  * Now try sending the requests.
+
+### Next Steps
+Try modifying with the requests. For example:
+* Remove the access token from the requests. See what happens.
+* Remove a required scope and then re-[authorize](#setup-oauth2-authorization-method) to get new tokens. Try the requests again.
+* Modify the Okta Authorization Server Policy (and Rules) to interact with your API requests. Notice how by changing the parameters on what's allowed and not allowed (for example: grant types, group whitelist, etc.) you can limit (protect) the access to the APIs.
+
 
